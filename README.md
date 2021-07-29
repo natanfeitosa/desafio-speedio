@@ -1,4 +1,4 @@
-# desafio SpeedIo
+# Desafio SpeedIo
 
 ## Project setup
 ```
