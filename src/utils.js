@@ -172,6 +172,8 @@ export const fs = (file) => {
   return { on, run, exit }
 }
 
+export const str2regex = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+
 export class TextSearch {
   constructor(t) {
     this.t = t
@@ -236,10 +238,6 @@ export class TextSearch {
     if (!matches) {
       return 0
     }
-    //     escapeStringRegExp.matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
-    // function escapeStringRegExp(str) {
-    //     return str.replace(escapeStringRegExp.matchOperatorsRe, '\\$&');
-    // }
 
     const ss = text.replace(new RegExp('[^\\p{L}\\d]+', 'gium'), '')
 
@@ -262,7 +260,9 @@ export class TextSearch {
     let founds = searchable
       .map((v, i) => {
         if (
-          !!this.normalize(v).match(new RegExp(this.normalize(text), 'uimg'))
+          !!this.normalize(v).match(
+            new RegExp(str2regex(this.normalize(text)), 'uimg'),
+          )
         ) {
           const matches =
             textWords.filter((word) => v.indexOf(word) > -1).length ===
